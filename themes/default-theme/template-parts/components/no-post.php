@@ -1,0 +1,1 @@
+<p class="message">No post</p>

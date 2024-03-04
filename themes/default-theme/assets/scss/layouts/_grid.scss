@@ -1,0 +1,51 @@
+.flex{display:flex;}
+.flex-wrap{flex-wrap:wrap;}
+
+/*----- FLEX DIRECTIONS START -----*/
+.row{flex-direction:row !important;}
+.row-reverse{flex-direction:row-reverse !important;}
+.column{flex-direction:column !important;}
+.column-reverse{flex-direction:column-reverse !important;}
+.initial{flex-direction:initial !important;}
+/*----- FLEX DIRECTIONS END -----*/
+
+
+
+
+
+/*----- ALIGN BLOCKS CLASSES START -----*/
+.justify-between{justify-content:space-between !important;}
+.justify-center{justify-content:center !important;}
+.justify-start{justify-content:flex-start !important;}
+.justify-end{justify-content:flex-end !important;}
+.justify-around{justify-content:space-around !important;}
+
+.align-center{align-items:center !important;}
+.align-start{align-items:flex-start;}
+.align-end{align-items:flex-end;}
+
+.mg-auto{margin:auto !important;}
+
+
+
+
+
+
+/*--- FLEX BASED CLASSES END---*/
+
+
+.wrapper{
+	display: flex;
+	width:100%;
+}
+
+.container-boxed{
+	display: flex;
+	width: 1170px;
+ 	margin: 0 auto;
+}
+
+
+
+
+

@@ -1,0 +1,22 @@
+///// Font Imports /////
+@mixin font-face($font-family, $file-path, $weight, $style: normal) {
+  @font-face {
+    font-family: $font-family;
+    font-weight: $weight;
+    font-style: $style;
+    font-display: swap;
+    src: url('#{$file-path}.eot');
+    src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'), 
+    url('#{$file-path}.woff') format('woff'), 
+    url('#{$file-path}.woff2') format('woff2'), 
+    url('#{$file-path}.ttf') format('truetype'),
+    url('#{$file-path}.svg') format("svg"); 
+  }
+}
+
+@include font-face("PP Neue Montreal", "../fonts/PPNeueMontreal/PPNeueMontreal-Book", 400);
+@include font-face("PP Neue Montreal", "../fonts/PPNeueMontreal/PPNeueMontreal-Italic", 400, italic);
+@include font-face("PP Neue Montreal", "../fonts/PPNeueMontreal/PPNeueMontreal-Thin", 300);
+@include font-face("PP Neue Montreal", "../fonts/PPNeueMontreal/PPNeueMontreal-Medium", 500);
+@include font-face("PP Neue Montreal", "../fonts/PPNeueMontreal/PPNeueMontreal-SemiBolditalic", 600, italic);
+@include font-face("PP Neue Montreal", "../fonts/PPNeueMontreal/PPNeueMontreal-Bold", 700);

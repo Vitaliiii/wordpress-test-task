@@ -1,0 +1,99 @@
+html {
+  font-family: $PPNeueMontreal;
+  font-weight: 400;
+  color: $black;
+  font-size: $baseFontSize;
+  line-height: $baseLineHeight;
+  font-style: normal;
+}
+
+// Header Styles
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  line-height: $headingLineHeight;
+  color: $dark;
+  font-family: $PPNeueMontreal;
+  font-style: normal;
+  font-weight: 500;
+
+  &.bold,
+  strong{
+    font-weight: 700;
+  }
+
+  a {
+    font-weight: inherit;
+  }
+}
+
+h1{
+  font-size: 72px;
+
+  @media (max-width: $smallBreakpoint){
+    font-size: 56px;
+  }
+}
+
+h2{
+  font-size: 52px;
+
+  @media (max-width: $smallBreakpoint){
+    font-size: 40px;
+  }
+}
+
+h3{
+  font-size: 40px;
+
+  @media (max-width: $smallBreakpoint){
+    font-size: 28px;
+  }
+}
+
+h4{
+  font-size: 32px;
+
+  @media (max-width: $smallBreakpoint){
+    font-size: 20px;
+  }
+}
+
+h5{
+  font-size: 24px;
+
+  @media (max-width: $smallBreakpoint){
+    font-size: 18px;
+  }
+}
+
+h6{
+  font-size: 20px;
+
+  @media (max-width: $smallBreakpoint){
+    font-size: 16px;
+  }
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+
+// Text Styles
+em {
+  font-style: italic;
+}
+
+strong {
+  font-weight: 700;
+}
+
+a {
+  transition: all .3s ease;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
