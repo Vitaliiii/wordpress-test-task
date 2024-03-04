@@ -172,6 +172,11 @@ if (is_admin()) {
 }
 
 /**
+ * Implement the Custom Post Type.
+ */
+require get_template_directory() . '/inc/custom-post-type.php';
+
+/**
  * Implement the Custom Header feature.
  */
 require get_template_directory() . '/inc/custom-header.php';
