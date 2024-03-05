@@ -34,6 +34,7 @@
 		 'show_ui'             => true,
 		 'show_in_menu'        => true,
 		 'show_in_admin_bar'   => true,
+		 'show_in_rest'        => true,
 		 'menu_position'       => 22,
 		 'menu_icon'           => 'dashicons-list-view',
 		 'show_in_nav_menus'   => true,

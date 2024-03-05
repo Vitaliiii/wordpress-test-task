@@ -182,11 +182,6 @@ require get_template_directory() . '/inc/custom-post-type.php';
 require get_template_directory() . '/inc/custom-header.php';
 
 /**
- * Custom template tags for this theme.
- */
-require get_template_directory() . '/inc/template-tags.php';
-
-/**
  * Functions which enhance the theme by hooking into WordPress.
  */
 require get_template_directory() . '/inc/template-functions.php';
@@ -195,20 +190,6 @@ require get_template_directory() . '/inc/template-functions.php';
  * Customizer additions.
  */
 require get_template_directory() . '/inc/customizer.php';
-
-/**
- * Load Jetpack compatibility file.
- */
-if ( defined( 'JETPACK__VERSION' ) ) {
-	require get_template_directory() . '/inc/jetpack.php';
-}
-
-/**
- * Load WooCommerce compatibility file.
- */
-if ( class_exists( 'WooCommerce' ) ) {
-	require get_template_directory() . '/inc/woocommerce.php';
-}
 
 
 if( function_exists('acf_add_options_page') ) {
@@ -258,3 +239,38 @@ add_filter( 'ai1wm_exclude_themes_from_export', function ( $exclude_filters ) {
 	$exclude_filters[] = 'default-theme/.git'; 
 	return $exclude_filters;
 } );
+
+
+// FAQ posts display by Ajax
+function ajax_faq() {
+	$args = array(
+		'post_type'   => 'faq',
+		'post_status' => 'publish',
+		'orderby'     => 'title',
+		'order'       => 'ASC'
+	);
+
+	$query = new WP_Query($args);
+	
+	ob_start();
+
+	if ($query->have_posts()) {
+		$counter = 1;
+		while ($query->have_posts()) {
+			$query->the_post();
+
+			get_template_part('template-parts/content', 'faq_ajax', array( 'number'  => $counter ));
+			$counter++;
+		}
+
+		wp_reset_postdata();
+	} else {
+		echo "<p>No FAQ items</p>";
+	}
+
+	$content = ob_get_clean();
+
+	wp_send_json($content);
+  }
+  add_action('wp_ajax_ajax_faq', 'ajax_faq');
+  add_action('wp_ajax_nopriv_ajax_faq', 'ajax_faq');

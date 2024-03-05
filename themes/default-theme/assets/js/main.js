@@ -66,7 +66,6 @@ jQuery(document).on("ready", function () {
       toggler.classList.toggle("active");
       mobileMenu.classList.toggle("active");
       document.body.classList.toggle("lock");
-      
 
       if (mobileMenu.classList.contains("active")) {
         mobileMenu.style.top = scrollDistance * -1;
@@ -79,47 +78,80 @@ jQuery(document).on("ready", function () {
     });
   }
 
-  function booksRating() {
-    const rating = document.querySelector(".post-rating");
+  function faqAnimation() {
+    jQuery(".faq__item").each(function () {
+      const thisItem = jQuery(this);
+      const thisButton = thisItem.find(".faq__item-button");
+      const thisText = thisItem.find(".faq__item-text");
 
-    if (!rating) {
+      thisButton.click(function () {
+        thisItem.toggleClass("active");
+        thisText.slideToggle();
+      });
+    });
+  }
+
+  function jsonDisplayFAQ() {
+    const acfTemplate = document.querySelector("#faq-acf");
+
+    if (!acfTemplate) {
       return;
     }
 
-    jQuery('.post').each(function () {
-      const thisRate = jQuery(this).find('.post-rating');
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    let counter = 0;
 
-      if (!thisRate) {
-        return;
-      }
+    document.querySelectorAll(".faq__item").forEach(function (element, index, array) {
+      const faqId = element.getAttribute("data-id");
+      const fetchLink = `${protocol}//${hostname}/wp-json/wp/v2/faq/${faqId}`;
 
-      const thisPlus = jQuery(this).find('.rate-plus');
-      const thisMinus = jQuery(this).find('.rate-minus');
-      const thisNum = jQuery(this).find('.rate-number').text();
-      const bookId = jQuery(this).data('id');
+      fetch(fetchLink)
+        .then((response) => response.json())
+        .then((post) => {
+          const postContent = element.querySelector(".faq__item-content");
+          postContent.innerHTML = `<button class="faq__item-button h4">${post.title.rendered}</button><article class="faq__item-text h4">${post.content.rendered}</article>`;
 
-      let newthisRate = parseInt(thisNum);
-      thisPlus.on('click', function () {
-        newthisRate++;
-        updateNumber(bookId, newthisRate);
-      });
-      thisMinus.on('click', function () {
-        newthisRate--;
-        updateNumber(bookId, newthisRate);
-      });
+          counter++;
+          if (counter === array.length) {
+            setTimeout(function(){
+              faqAnimation();
+            }, 500);
+          }
+        })
+        .catch((error) => console.error("Error fetching post:", error));
+      
+
     });
+  }
 
-    function updateNumber(postId, rateNumber) {
+  function faqAjax() {
+    const ajaxTemplate = document.querySelector("#faq-ajax");
+
+    if (!ajaxTemplate) {
+      return;
+    }
+
+    jQuery('#show-faq').click(function () {
+      jQuery('.faq__list').addClass('loading');
+      updateNumber();
+    });
+    function updateNumber() {
       jQuery.ajax({
         type: "POST",
         url: my_ajax_object.ajax_url,
         data: {
-          action: "books_rating_ajax",
-          post_id: postId,
-          rating: rateNumber,
+          action: "ajax_faq",
         },
         success: function (response) {
-          jQuery(`#rate-${postId}`).text(response);
+          jQuery('.faq__list').html(response);
+
+          jQuery( document ).on( "ajaxComplete", function() {
+            jQuery(".faq__list").removeClass('loading');
+            setTimeout(function(){
+              faqAnimation();
+            }, 300);
+          } );
         },
         error: function (xhr, status, error) {
           console.log(error);
@@ -128,7 +160,9 @@ jQuery(document).on("ready", function () {
     }
   }
 
-  booksRating();
+  faqAjax();
+  faqAnimation();
+  jsonDisplayFAQ();
   toggleMobileMenu();
   stickyHeader();
 });
